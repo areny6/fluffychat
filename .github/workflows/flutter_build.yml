@@ -21,12 +21,19 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.3.8'  # 你需要的 Flutter 版本（可以更改）
+        flutter-version: 'stable'  # 使用稳定版本来确保获取最新的 Flutter 和 Dart 版本
 
-    # Step 3: 获取依赖
+    # Step 3: 安装依赖
     - name: Install dependencies
       run: flutter pub get
 
-    # Step 4: 编译 Flutter 项目
-    - name: Build the project
+    # Step 4: 编译 Flutter 项目（Windows）
+    - name: Build the project for Windows
       run: flutter build windows --release  # 适配 Windows 构建，若是其他平台替换命令
+
+    # 可选：如果需要生成可供下载的构建文件，可以添加一个上传步骤
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: fluffychat-windows-release
+        path: build/windows/runner/Release/
