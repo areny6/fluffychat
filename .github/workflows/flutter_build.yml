@@ -1,0 +1,32 @@
+name: Flutter Build
+
+on:
+  push:
+    branches:
+      - main  # 设置为你要触发构建的分支名称
+  pull_request:
+    branches:
+      - main  # 也可以设置触发条件为 Pull Request 到 main 分支时
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 环境
+
+    steps:
+    # Step 1: Checkout代码
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Step 2: 设置 Flutter 环境
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.3.8'  # 你需要的 Flutter 版本（可以更改）
+
+    # Step 3: 获取依赖
+    - name: Install dependencies
+      run: flutter pub get
+
+    # Step 4: 编译 Flutter 项目
+    - name: Build the project
+      run: flutter build windows --release  # 适配 Windows 构建，若是其他平台替换命令
